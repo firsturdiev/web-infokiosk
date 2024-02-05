@@ -1,0 +1,113 @@
+/* Fonts
+
+/* !!! Qo'shilishi kerak */
+
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap");
+
+/* Starter */
+
+*,
+*::after,
+*::before {
+  box-sizing: inherit;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-drag: none;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+html {
+  min-height: 100vh;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+body {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  font-family: "Jost", sans-serif;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 150%;
+  color: #fff;
+  letter-spacing: 1.44px;
+  background-color: rgba(0, 0, 0, 0.50);
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  display: block;
+  padding: 0;
+}
+
+.site-content {
+  flex: 1 0 auto;
+}
+
+.site-footer {
+  flex-shrink: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* .container {
+  margin: 0 auto;
+  max-width: 1680px;
+  padding: 0 16px;
+} */
+
+/* @media screen and (min-width: 768px) {
+  .container {
+    padding: 0 64px;
+  }
+}
+
+@media screen and (min-width: 1300px) {
+  .container {
+    padding: 0 32px;
+  }
+}
+
+@media screen and (min-width: 1700px) {
+  .container {
+    padding: 0;
+  }
+} */
