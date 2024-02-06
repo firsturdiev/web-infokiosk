@@ -23,29 +23,8 @@
       </div>
 
       <ul class="list">
-        <li class="item item--active">
-          <NuxtLink class="item__link" to="#">Andijan Luxe Hotel</NuxtLink>
-        </li>
-        <li class="item">
-          <NuxtLink class="item__link" to="#">Grand Xanabad Hotel</NuxtLink>
-        </li>
-        <li class="item">
-          <NuxtLink class="item__link" to="#">Khanabad Asia Hotel</NuxtLink>
-        </li>
-        <li class="item">
-          <NuxtLink class="item__link" to="#">Sheykh Hotel</NuxtLink>
-        </li>
-        <li class="item">
-          <NuxtLink class="item__link" to="#">Payitaxt Hotel</NuxtLink>
-        </li>
-        <li class="item">
-          <NuxtLink class="item__link" to="#">Asia House Hotel</NuxtLink>
-        </li>
-        <li class="item">
-          <NuxtLink class="item__link" to="#">Chinor mehmonxonasi</NuxtLink>
-        </li>
-        <li class="item">
-          <NuxtLink class="item__link" to="#">Karvon-saroy mehmonxonasi</NuxtLink>
+        <li :class="activeHotel == item.id ? 'item item--active' : 'item'" v-for="item in hotels">
+          <button class="item__link" :data-id="item.id" @click="setActiveHotel(item.id)">{{ item.name.uz }}</button>
         </li>
       </ul>
     </div>
@@ -69,9 +48,9 @@
           style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" />
         <div class="modal">
           <div class="modal__start">
-            <img class="modal__img" src="~/assets/img/img-modal.jpg" />
+            <img class="modal__img" :src="hotels.find(item => item.id == activeHotel).img" />
             <div class="modal__info">
-              <p class="modal__title">Andijon viloyati</p>
+              <p class="modal__title">{{ hotels.find(item => item.id == activeHotel).name.uz }}</p>
               <p class="modal__text">Аlisher Navoiy nomli Аndijon shaxar madaniyat va istirohat bogʼining sharqiy tomonida
                 joylashgan mazkur meʼmoriy obida 1905 – 1907 yillari andijonlik yirik boy, paxta zavodining egasi
                 Аhmadbekxoji Temurbek oʼgʼli buyurtmasi bilan mehmonxona va ish yuritish joyi sifatida bunyod etilgan.
@@ -81,7 +60,8 @@
                 naqqoshlik va ganch oʼymakorligi turlari bilan bezatilgan.</p>
               <p class="modal__info-end">
                 <span class="modal__tel-label">Telefon raqami:</span>
-                <NuxtLink class="modal__tel" to="tel:+998901234567">+998 90 123-45-67</NuxtLink>
+                <NuxtLink class="modal__tel" :to="'tel:+' + hotels.find(item => item.id == activeHotel).phone_number">{{
+                  '+' + hotels.find(item => item.id == activeHotel).phone_number }}</NuxtLink>
               </p>
             </div>
           </div>
@@ -172,12 +152,11 @@
 
   <div class="overlay overlay--location">
     <div class="overlay__inner">
-      <iframe class="overlay__start"
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11991.902464338093!2d69.22935467963867!3d41.287635150000014!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38ae8a44381ba417%3A0x749178874f5b1c1a!2sYuri%20Gagarin%20Monument!5e0!3m2!1sen!2s!4v1707126537418!5m2!1sen!2s"
+      <iframe class="overlay__start" :src="hotels.find(item => item.id == activeHotel).map.urlToEmbeddedMap"
         style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" />
       <div class="overlay__end">
-        <p class="overlay__title">Scan the QR code to open the map on your phone</p>
-        <img class="overlay__qr" src="~/assets/img/img-qr.svg" />
+        <p class="overlay__title">Xaritani telefoningizda ochish uchun QR kodni skanerlang</p>
+        <img class="overlay__qr" :src="hotels.find(item => item.id == activeHotel).map.urlToGM" />
 
         <button class="btn--close"></button>
       </div>
@@ -186,24 +165,22 @@
 
   <div class="overlay overlay--info">
     <div class="overlay__inner">
+      <div class="overlay__start">
+        <img class="overlay__img" :src="hotels.find(item => item.id == activeHotel).img" />
+      </div>
       <div class="overlay__end">
-        <p class="overlay__title">Xostel Afsona</p>
+        <p class="overlay__title">{{ hotels.find(item => item.id == activeHotel).name.uz }}</p>
         <div class="overlay__row">
-          <span>O'rinlar soni:</span>
-          <span>34</span>
-        </div>
-        <div class="overlay__row">
-          <span>Xonalar soni:</span>
-          <span>12</span>
+          <span style="margin-bottom: 10px; font-weight: 500;">{{ hotels.find(item => item.id == activeHotel).description.uz }}</span>
         </div>
 
         <div class="overlay__row">
-          <span>Manzil:</span>
-          <span>Yangi hayot MFY</span>
+          <span style="font-weight: bold;">Manzil:</span>
+          <span>{{ hotels.find(item => item.id == activeHotel).address.uz }}</span>
         </div>
         <div class="overlay__row">
-          <span>Telefon raqami:</span>
-          <span>+998 (93) 249-01-00</span>
+          <span style="font-weight: bold;">Telefon raqami:</span>
+          <span>{{ '+' + hotels.find(item => item.id == activeHotel).phone_number }}</span>
         </div>
 
         <button class="btn--close"></button>
@@ -231,6 +208,11 @@
   background-position: right 0 top 0;
   background-size: auto 100%;
   background-repeat: no-repeat;
+}
+
+.overlay__qr {
+  width: 270px;
+  height: 270px;
 }
 
 .slide__img {
@@ -392,7 +374,7 @@
   border-radius: 4px;
   background: #00000080;
   backdrop-filter: blur(16px);
-  border: 1px solid #FFFFFF
+  border: 1px solid #FFFFFF;
 }
 
 .item::before {
@@ -414,6 +396,11 @@
 .item__link {
   font-size: 16px;
   letter-spacing: 0.8px;
+  color: #fff;
+}
+
+.item--active .item__link {
+  color: #113162;
 }
 
 .item__link::before {
@@ -429,6 +416,9 @@
 .site-content__end {
   flex-grow: 1;
   width: 30%;
+  display: flex;
+  padding-bottom: 20px;
+  flex-direction: column;
 }
 
 .site-header {
@@ -502,11 +492,13 @@
 }
 
 .inner {
+  flex-grow: 1;
   position: relative;
   width: 100%;
-  padding-top: 100px;
-  padding-bottom: 100px;
-  padding-inline: 140px;
+  padding-inline: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .inner__map {
@@ -534,8 +526,9 @@
 
 .modal__img {
   margin-right: 40px;
-  width: 313px;
+  width: 40%;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .modal__title {
@@ -612,7 +605,19 @@
 }
 
 .overlay--info {
-  padding: 300px 100px;
+  column-gap: 100px;
+}
+
+.overlay--info .overlay__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  flex-shrink: 0;
+  flex-grow: 1;
+}
+
+.overlay--info .overlay__start {
+  width: 50%;
 }
 
 .overlay--open {
@@ -723,8 +728,230 @@ export default {
     // Glide 
 
     new Glide('.slider', {
-      type: 'carousel'
+      type: 'carousel',
+      autoplay: 3000
+
     }).mount();
+  },
+  data() {
+    return {
+      hotels: [
+        {
+          "id": 1,
+          "name": {
+            "uz": "Sherdor Mehmonxona",
+            "ru": "Шердор Отель",
+            "en": "Sherdor Hotel"
+          },
+          "description": {
+            "uz": "O‘rinlar soni 25, xonalar soni 10",
+            "ru": "Kоличество мест 25, количество комнат 10",
+            "en": "Number of beds 25, number of rooms 10"
+          },
+          "address": {
+            "uz": "Yangi xayot MFY",
+            "ru": "Янги хаёт МФЙ",
+            "en": "Yangi xayot MFY"
+          },
+          "phone_number": "998932133502",
+          "long": 73.004347,
+          "lat": 40.791921,
+          "img": "https://mybooking-file-storage.s3.us-east-2.amazonaws.com/uploads/hotel/images/1062_1609570184MBXZ_1024x768.JPG",
+          "map": {
+            "urlToGM": "http://tour-info.uzbektourism.uz/cdn/hotels_1.svg",
+            "urlToEmbeddedMap": "https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d6040.989793592837!2d72.9929903475096!3d40.79511735781562!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e2!4m4!2s40.79685%2C%2072.99118!3m2!1d40.79685!2d72.99118!4m4!2s40.791921%2C%2073.004347!3m2!1d40.791920999999995!2d73.004347!5e0!3m2!1sru!2s!4v1702154962528!5m2!1sru!2s"
+          }
+        },
+        {
+          "id": 2,
+          "name": {
+            "uz": "Xostel Afsona",
+            "ru": "Отель афсона",
+            "en": "Afsona Hotel"
+          },
+          "description": {
+            "uz": "O‘rinlar soni 34, xonalar soni 12",
+            "ru": "Kоличество мест 34, количество комнат 12",
+            "en": "Number of beds 34, number of rooms 12"
+          },
+          "address": {
+            "uz": "Yangi xayot MFY",
+            "ru": "Янги хаёт МФЙ",
+            "en": "Yangi xayot MFY"
+          },
+          "phone_number": "998932490100",
+          "long": 72.985212,
+          "lat": 40.792560,
+          "img": "https://afsona-qarshi.booked.net/data/Photos/OriginalPhoto/6391/639101/639101526/Afsona-Hotel-Qarshi-Exterior.JPEG",
+          "map": {
+            "urlToGM": "http://tour-info.uzbektourism.uz/cdn/hotels_2.svg",
+            "urlToEmbeddedMap": "https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d3020.5149209791944!2d72.98610397654996!3d40.794677232549205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e2!4m4!2s40.79685%2C%2072.99118!3m2!1d40.79685!2d72.99118!4m4!2s40.792560%2C%2072.985212!3m2!1d40.792559999999995!2d72.98521199999999!5e0!3m2!1sru!2s!4v1702155325487!5m2!1sru!2s"
+          }
+        },
+        {
+          "id": 3,
+          "name": {
+            "uz": "Andijan Luxe Hotel",
+            "ru": "Семейные гостевые дома",
+            "en": "Family guest houses"
+          },
+          "description": {
+            "uz": "O‘rinlar soni 10, xonalar soni 5",
+            "ru": "Kоличество мест 10, количество комнат 5",
+            "en": "Number of beds 10, number of rooms 5"
+          },
+          "address": {
+            "uz": "Do‘stlik ko‘chas",
+            "ru": "Улица Дўстлик",
+            "en": "Do'stlik Street"
+          },
+          "phone_number": "998932133502",
+          "long": 73.004395,
+          "lat": 40.789740,
+          "img": "http://tour-info.uzbektourism.uz/cdn/hotels_3.jpg",
+          "map": {
+            "urlToGM": "http://tour-info.uzbektourism.uz/cdn/hotels_3.svg",
+            "urlToEmbeddedMap": "https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d6041.110708681854!2d72.99305454750943!3d40.79378850797904!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e2!4m4!2s40.79685%2C%2072.99118!3m2!1d40.79685!2d72.99118!4m4!2s40.789740%2C%2073.004395!3m2!1d40.789739999999995!2d73.004395!5e0!3m2!1sru!2s!4v1702155729893!5m2!1sru!2s"
+          }
+        },
+        {
+          "id": 4,
+          "name": {
+            "uz": "Grand Xanabad Hotel",
+            "ru": "Grand Xanabad Hotel",
+            "en": "Family guest houses"
+          },
+          "description": {
+            "uz": "O‘rinlar soni 10, xonalar soni 3",
+            "ru": "Kоличество мест 10, количество комнат 3",
+            "en": "Number of beds 10, number of rooms 3"
+          },
+          "address": {
+            "uz": "Anxor bo'yi ko'chasi",
+            "ru": "Улица Анхор бўйи",
+            "en": "Ankhor street"
+          },
+          "phone_number": "998946327439",
+          "long": 73.003880,
+          "lat": 40.789415,
+          "img": "http://tour-info.uzbektourism.uz/cdn/hotels_4.jpg",
+          "map": {
+            "urlToGM": "http://tour-info.uzbektourism.uz/cdn/hotels_4.svg",
+            "urlToEmbeddedMap": "https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d6041.1021100188955!2d72.99299034750949!3d40.79388300796726!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e2!4m4!2s40.79685%2C%2072.99118!3m2!1d40.79685!2d72.99118!4m4!2s40.789415%2C%2073.003880!3m2!1d40.789415!2d73.00388!5e0!3m2!1sru!2s!4v1702155836925!5m2!1sru!2s"
+          }
+        },
+        {
+          "id": 5,
+          "name": {
+            "uz": "Khanabad Asia Hotel",
+            "ru": "Семейные гостевые дома",
+            "en": "Family guest houses"
+          },
+          "description": {
+            "uz": "O‘rinlar soni 9, xonalar soni 3",
+            "ru": "Kоличество мест 9, количество комнат 3",
+            "en": "Number of beds 9, number of rooms 3"
+          },
+          "address": {
+            "uz": "Xontog' MFY",
+            "ru": "Хонтоғ МФЙ",
+            "en": "Xontog' MFY"
+          },
+          "phone_number": "998991708566",
+          "long": 72.980472,
+          "lat": 40.791921,
+          "img": "http://tour-info.uzbektourism.uz/cdn/hotels_5.jpg",
+          "map": {
+            "urlToGM": "http://tour-info.uzbektourism.uz/cdn/hotels_5.svg",
+            "urlToEmbeddedMap": "https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d3592.050940242501!2d72.98387030375503!3d40.79406535377164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e2!4m4!2s40.79685%2C%2072.99118!3m2!1d40.79685!2d72.99118!4m4!2s40.791921%2C%2072.980472!3m2!1d40.791920999999995!2d72.98047199999999!5e0!3m2!1sru!2s!4v1702155946679!5m2!1sru!2s"
+          }
+        },
+        {
+          "id": 6,
+          "name": {
+            "uz": "Sheykh Hotel",
+            "ru": "Семейные гостевые дома",
+            "en": "Family guest houses"
+          },
+          "description": {
+            "uz": "O‘rinlar soni 8, xonalar soni 2",
+            "ru": "Kоличество мест 8, количество комнат 2",
+            "en": "Number of beds 8, number of rooms 2"
+          },
+          "address": {
+            "uz": "Xontog' MFY",
+            "ru": "Хонтоғ МФЙ",
+            "en": "Xontog' MFY"
+          },
+          "phone_number": "998996486986",
+          "long": 72.980601,
+          "lat": 40.802934,
+          "img": "https://mybooking-file-storage.s3.us-east-2.amazonaws.com/uploads/hotel/images/1062_1609570184MBXZ_1024x768.JPG",
+          "map": {
+            "urlToGM": "http://tour-info.uzbektourism.uz/cdn/hotels_6.svg",
+            "urlToEmbeddedMap": "https://www.google.com/maps/embed?pb=!1m26!1m12!1m3!1d3020.270464918948!2d72.98462282655024!3d40.80005003221976!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m11!3e2!4m4!2s40.79685%2C%2072.99118!3m2!1d40.79685!2d72.99118!4m4!2s40.802934%2C%2072.980601!3m2!1d40.802934!2d72.980601!5e0!3m2!1sru!2s!4v1702155993558!5m2!1sru!2s"
+          }
+        },
+        {
+          "id": 7,
+          "name": {
+            "uz": "Payitaxt Hotel",
+            "ru": "Семейные гостевые дома",
+            "en": "Family guest houses"
+          },
+          "description": {
+            "uz": "O‘rinlar soni 9, xonalar soni 3",
+            "ru": "Kоличество мест 9, количество комнат 3",
+            "en": "Number of beds 9, number of rooms 3"
+          },
+          "address": {
+            "uz": "Xontog' MFY",
+            "ru": "Хонтоғ МФЙ",
+            "en": "Xontog' MFY"
+          },
+          "phone_number": "998973390332",
+          "long": 72.980577,
+          "lat": 40.802906,
+          "img": "http://tour-info.uzbektourism.uz/cdn/hotels_7.jpg",
+          "map": {
+            "urlToGM": "http://tour-info.uzbektourism.uz/cdn/hotels_7.svg",
+            "urlToEmbeddedMap": "https://www.google.com/maps/embed?pb=!1m27!1m12!1m3!1d3020.2704649189454!2d72.9846103265503!3d40.800050032219815!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m12!3e2!4m5!1s0x0%3A0xc1e18c28974b0511!2s40.79685%2C%2072.99118!3m2!1d40.7969243!2d72.9914855!4m4!2s40.802906%2C%2072.980577!3m2!1d40.802906!2d72.980577!5e0!3m2!1sru!2s!4v1702156098773!5m2!1sru!2s"
+          }
+        },
+        {
+          "id": 8,
+          "name": {
+            "uz": "Asia House Hotel",
+            "ru": "Семейные гостевые дома",
+            "en": "Family guest houses"
+          },
+          "description": {
+            "uz": "O‘rinlar soni 8, xonalar soni 2",
+            "ru": "Kоличество мест 8, количество комнат 2",
+            "en": "Number of beds 8, number of rooms 2"
+          },
+          "address": {
+            "uz": "Xontog' MFY",
+            "ru": "Хонтоғ МФЙ",
+            "en": "Xontog' MFY"
+          },
+          "phone_number": "998993251343",
+          "long": 72.980204,
+          "lat": 40.802788,
+          "img": "http://tour-info.uzbektourism.uz/cdn/hotels_8.jpg",
+          "map": {
+            "urlToGM": "http://tour-info.uzbektourism.uz/cdn/hotels_8.svg",
+            "urlToEmbeddedMap": "https://www.google.com/maps/embed?pb=!1m27!1m12!1m3!1d5079.518131856117!2d72.98253652027316!3d40.79941077868418!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m12!3e2!4m5!1s0x0%3A0xc1e18c28974b0511!2s40.79685%2C%2072.99118!3m2!1d40.7969243!2d72.9914855!4m4!2s40.802788%2C%2072.980204!3m2!1d40.802788!2d72.980204!5e0!3m2!1sru!2s!4v1702156143974!5m2!1sru!2s"
+          }
+        }
+      ],
+      activeHotel: 1
+    }
+  },
+  methods: {
+    setActiveHotel(id) {
+      this.activeHotel = id;
+    }
   }
 }
 </script>
