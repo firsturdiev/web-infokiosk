@@ -9,46 +9,56 @@
 
         <li class="category">
           <img class="category__icon" src="~/assets/img/icon-restaurants.svg" />
-          <NuxtLink class="category__link" to="/hotels">Kafe va restoranlar</NuxtLink>
+          <NuxtLink class="category__link" to="/restaurants">Kafe va restoranlar</NuxtLink>
         </li>
 
         <li class="category">
           <img class="category__icon" src="~/assets/img/icon-historical.svg" />
-          <NuxtLink class="category__link" to="/hotels">Tarixiy obyektlar</NuxtLink>
+          <NuxtLink class="category__link" to="/histories">Tarixiy obyektlar</NuxtLink>
         </li>
 
         <li class="category">
           <img class="category__icon" src="~/assets/img/icon-relax.svg" />
-          <NuxtLink class="category__link" to="/hotels">Sihatgohlar</NuxtLink>
+          <NuxtLink class="category__link" to="/parks">Sihatgohlar</NuxtLink>
         </li>
 
         <li class="category">
           <img class="category__icon" src="~/assets/img/icon-houses.svg" />
-          <NuxtLink class="category__link" to="/hotels">Mehmon uylari</NuxtLink>
+          <NuxtLink class="category__link" to="/houses">Oilaviy mehmonxonalar</NuxtLink>
+        </li>
+
+        <li class="category">
+          <img class="category__icon" src="~/assets/img/icon-houses.svg" />
+          <NuxtLink class="category__link" to="/relaxes">Madaniy dam olish maskanlari</NuxtLink>
+        </li>
+
+        <li class="category">
+          <img class="category__icon" src="~/assets/img/icon-relax.svg" />
+          <NuxtLink class="category__link" to="/dachas">Dala hovlilar</NuxtLink>
         </li>
 
         <li class="category">
           <img class="category__icon" src="~/assets/img/icon-around.svg" />
-          <NuxtLink class="category__link" to="/hotels">O‘zbekiston bo‘ylab</NuxtLink>
+          <NuxtLink class="category__link" to="/covers">O‘zbekiston bo‘ylab</NuxtLink>
         </li>
       </ul>
 
       <ul class="links">
         <li class="link">
           <p class="link__title">O‘zbekiston bo‘ylab sayohat</p>
-          <NuxtLink class="link__url" to="https://uzbekistan.travel" target="_blank">uzbekistan.travel</NuxtLink>
+          <p class="link__url">uzbekistan.travel</p>
         </li>
         <li class="link">
           <p class="link__title">Virtual sayohat</p>
-          <NuxtLink class="link__url" to="https://uzbekistan360.uz" target="_blank">uzbekistan360.uz</NuxtLink>
+          <p class="link__url">uzbekistan360.uz</p>
         </li>
         <li class="link">
           <p class="link__title">O‘zbekiston muzeylari</p>
-          <NuxtLink class="link__url" to="https://museums.uz" target="_blank">museums.uz</NuxtLink>
+          <p class="link__url">museums.uz</p>
         </li>
         <li class="link">
           <p class="link__title">Tabarruk ziyorat</p>
-          <NuxtLink class="link__url" to="https://tabarrukziyorat.uz" target="_blank">tabarrukziyorat.uz</NuxtLink>
+          <p class="link__url">tabarrukziyorat.uz</p>
         </li>
       </ul>
     </div>
@@ -134,6 +144,7 @@
 }
 
 .link {
+  text-align: center;
   width: 40%;
   flex-grow: 1;
   position: relative;
@@ -148,6 +159,8 @@
 }
 
 .link__url {
+  margin-top: auto;
+  text-align: center;
   font-size: 16px;
   letter-spacing: 0.96px;
   color: rgba(255, 255, 255, 0.60);

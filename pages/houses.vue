@@ -2,19 +2,19 @@
   <main class="site-content">
     <div class="site-content__start">
       <div class="dropdown">
-        <button class="dropdown__btn">Mehmonxonalar</button>
+        <button class="dropdown__btn">Oilaviy mehmonxonalar</button>
         <ul class="dropdown__list">
           <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/restaurants">Kafe va restoranlar</NuxtLink>
+            <NuxtLink class="dropdown__link" to="/hotels">Mehmonxonalar</NuxtLink>
           </li>
           <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/histories">Tarixiy obyektlar</NuxtLink>
+            <NuxtLink class="dropdown__link" to="/restaurants">Kafe va restoranlar</NuxtLink>
           </li>
           <li class="dropdown__item">
             <NuxtLink class="dropdown__link" to="/parks">Sihatgohlar</NuxtLink>
           </li>
           <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/houses">Oilaviy mehmonxonalar</NuxtLink>
+            <NuxtLink class="dropdown__link" to="/histories">Tarixiy obyektlar</NuxtLink>
           </li>
           <li class="dropdown__item">
             <NuxtLink class="dropdown__link" to="/relaxes">Madaniy dam olish maskanlari</NuxtLink>
@@ -756,7 +756,7 @@ export default {
   async setup() {
     const activeHotel = ref(null);
     const config = useRuntimeConfig();
-    const hotels = await useFetch(config.public.strapiURL + '/api/hotels?populate=*', {
+    const hotels = await useFetch(config.public.strapiURL + '/api/houses?populate=*', {
       headers: {
         'Authorization': `bearer ${config.public.strapiToken}`
       }

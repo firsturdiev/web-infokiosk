@@ -2,13 +2,13 @@
   <main class="site-content">
     <div class="site-content__start">
       <div class="dropdown">
-        <button class="dropdown__btn">Mehmonxonalar</button>
+        <button class="dropdown__btn">Madaniy dam olish maskanlari</button>
         <ul class="dropdown__list">
           <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/restaurants">Kafe va restoranlar</NuxtLink>
+            <NuxtLink class="dropdown__link" to="/hotels">Mehmonxonalar</NuxtLink>
           </li>
           <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/histories">Tarixiy obyektlar</NuxtLink>
+            <NuxtLink class="dropdown__link" to="/restaurants">Kafe va restoranlar</NuxtLink>
           </li>
           <li class="dropdown__item">
             <NuxtLink class="dropdown__link" to="/parks">Sihatgohlar</NuxtLink>
@@ -17,7 +17,7 @@
             <NuxtLink class="dropdown__link" to="/houses">Oilaviy mehmonxonalar</NuxtLink>
           </li>
           <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/relaxes">Madaniy dam olish maskanlari</NuxtLink>
+            <NuxtLink class="dropdown__link" to="/histories">Tarixiy obyektlar</NuxtLink>
           </li>
           <li class="dropdown__item">
             <NuxtLink class="dropdown__link" to="/dachas">Dala hovlilar</NuxtLink>
@@ -181,14 +181,14 @@
           <span style="font-weight: bold;">Telefon raqami:</span>
           <span>{{ activeHotel.attributes.phone_number }}</span>
         </div>
-        <div class="overlay__row">
+        <!-- <div class="overlay__row">
           <span style="font-weight: bold;">Bo'sh xonalar soni:</span>
           <span>{{ activeHotel.attributes.rooms }}</span>
         </div>
         <div class="overlay__row">
           <span style="font-weight: bold;">Bo'sh o'rinlar soni:</span>
           <span>{{ activeHotel.attributes.seats }}</span>
-        </div>
+        </div> -->
 
         <button class="btn--close"></button>
       </div>
@@ -388,7 +388,7 @@
   content: '';
   width: 30px;
   height: 30px;
-  background-image: url('~/assets/img/icon-hotels.svg');
+  background-image: url('~/assets/img/icon-historical.svg');
 }
 
 .item--active {
@@ -756,7 +756,7 @@ export default {
   async setup() {
     const activeHotel = ref(null);
     const config = useRuntimeConfig();
-    const hotels = await useFetch(config.public.strapiURL + '/api/hotels?populate=*', {
+    const hotels = await useFetch(config.public.strapiURL + '/api/relaxes?populate=*', {
       headers: {
         'Authorization': `bearer ${config.public.strapiToken}`
       }

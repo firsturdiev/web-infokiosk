@@ -1,44 +1,9 @@
 <template>
   <main class="site-content">
-    <div class="site-content__start">
-      <div class="dropdown">
-        <button class="dropdown__btn">Mehmonxonalar</button>
-        <ul class="dropdown__list">
-          <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/restaurants">Kafe va restoranlar</NuxtLink>
-          </li>
-          <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/histories">Tarixiy obyektlar</NuxtLink>
-          </li>
-          <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/parks">Sihatgohlar</NuxtLink>
-          </li>
-          <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/houses">Oilaviy mehmonxonalar</NuxtLink>
-          </li>
-          <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/relaxes">Madaniy dam olish maskanlari</NuxtLink>
-          </li>
-          <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/dachas">Dala hovlilar</NuxtLink>
-          </li>
-          <li class="dropdown__item">
-            <NuxtLink class="dropdown__link" to="/covers">O'zbekiston bo'ylab</NuxtLink>
-          </li>
-        </ul>
-      </div>
-
-      <ul class="list">
-        <li :class="activeHotel.id == item.id ? 'item item--active' : 'item'" v-for="item in hotels">
-          <button class="item__link" @click="setActiveHotel(item.id)">{{ item.attributes.title_uz }}</button>
-        </li>
-
-      </ul>
-    </div>
-
     <div class="site-content__end">
       <header class="site-header">
         <NuxtLink class="btn btn--back" to="/">Orqaga</NuxtLink>
+        <img class="img-around" src="~/assets/img/icon-around.svg">
         <NuxtLink class="logo" to="/">
           <img class="logo__img" src="~/assets/img/logo.svg">
         </NuxtLink>
@@ -50,153 +15,85 @@
       <div class="divider" />
 
       <div class="inner">
-        <iframe class="inner__map"
-          :src="getURL(activeHotel.attributes.embed_url)"
-          style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" />
-        <div class="modal">
-          <div class="modal__start">
-            <img class="modal__img" :src="publicURL + activeHotel.attributes.photo.data.attributes.url" />
-            <div class="modal__info">
-              <p class="modal__title">{{ activeHotel.attributes.title_uz }}</p>
-              <p class="modal__text">{{ activeHotel.attributes.info_uz }}</p>
-              <p class="modal__info-end">
-                <span class="modal__tel-label">Telefon raqami:</span>
-                <NuxtLink class="modal__tel" :to="'tel:' + activeHotel.attributes.phone_number">
-                  {{ activeHotel.attributes.phone_number }}
-                </NuxtLink>
-              </p>
+        <ul class="covers">
+          <li class="cover" v-for="item in hotels">
+            <img class="cover__img" @click="setActiveHotel(item.id)" :src="publicURL + item.attributes.photo.data.attributes.url" />
+            <div class="cover__inner">
+              <p class="cover__title">{{ item.attributes.title_uz }}</p>
             </div>
-          </div>
-
-          <div class="modal__end">
-            <button class="btn btn--location">Yo‘nalishni ko‘rsatish</button>
-            <button class="btn btn--info">Batafsil</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="slider glide">
-        <div class="glide__track" data-glide-el="track">
-          <ul class="glide__slides">
-            <li class="slide glide__slide">
-              <img class="slide__img" src="~/assets/img/bg-slider.jpg" />
-              <div class="slide__end">
-                <header class="slide__header">
-                  <p class="slide__title">Andijon Internation Hotel</p>
-                  <div class="slide__stars">
-                    <img class="slide__star" src="~/assets/img/icon-star.svg" />
-                    <img class="slide__star" src="~/assets/img/icon-star.svg" />
-                    <img class="slide__star" src="~/assets/img/icon-star.svg" />
-                    <img class="slide__star" src="~/assets/img/icon-star.svg" />
-                  </div>
-                </header>
-
-                <footer class="slide__footer">
-                  <NuxtLink class="slide__link" to="https://andijan-hotel.uz">andijan-hotel.uz</NuxtLink>
-                  <NuxtLink class="slide__tel" to="tel:+998911234567">+998 (91) 123-45-67</NuxtLink>
-                </footer>
-              </div>
-
-
-            </li>
-
-            <li class="slide glide__slide">
-              <img class="slide__img" src="~/assets/img/bg-slider.jpg" />
-              <div class="slide__end">
-                <header class="slide__header">
-                  <p class="slide__title">Andijon Internation Hotel</p>
-                  <div class="slide__stars">
-                    <img class="slide__star" src="~/assets/img/icon-star.svg" />
-                    <img class="slide__star" src="~/assets/img/icon-star.svg" />
-                    <img class="slide__star" src="~/assets/img/icon-star.svg" />
-                    <img class="slide__star" src="~/assets/img/icon-star.svg" />
-                  </div>
-                </header>
-
-                <footer class="slide__footer">
-                  <NuxtLink class="slide__link" to="https://andijan-hotel.uz">andijan-hotel.uz</NuxtLink>
-                  <NuxtLink class="slide__tel" to="tel:+998911234567">+998 (91) 123-45-67</NuxtLink>
-                </footer>
-              </div>
-            </li>
-
-            <li class="slide glide__slide">
-              <img class="slide__img" src="~/assets/img/bg-slider.jpg" />
-              <div class="slide__end">
-                <header class="slide__header">
-                  <p class="slide__title">Andijon Internation Hotel</p>
-                  <div class="slide__stars">
-                    <img class="slide__star" src="~/assets/img/icon-star.svg" />
-                    <img class="slide__star" src="~/assets/img/icon-star.svg" />
-                    <img class="slide__star" src="~/assets/img/icon-star.svg" />
-                    <img class="slide__star" src="~/assets/img/icon-star.svg" />
-                  </div>
-                </header>
-
-                <footer class="slide__footer">
-                  <NuxtLink class="slide__link" to="https://andijan-hotel.uz">andijan-hotel.uz</NuxtLink>
-                  <NuxtLink class="slide__tel" to="tel:+998911234567">+998 (91) 123-45-67</NuxtLink>
-                </footer>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-        <div class="glide__arrows" data-glide-el="controls">
-          <button class="glide__arrow glide__arrow--left" data-glide-dir="<"></button>
-          <button class="glide__arrow glide__arrow--right" data-glide-dir=">"></button>
-        </div>
+          </li>
+        </ul>
       </div>
     </div>
   </main>
 
   <!-- OVERLAYS -->
 
-  <div class="overlay overlay--location">
+  <div class="overlay overlay--pdf">
     <div class="overlay__inner">
-      <iframe class="overlay__start" :src="getURL(activeHotel.attributes.embed_url)"
-        style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" />
-      <div class="overlay__end">
-        <p class="overlay__title">Xaritani telefoningizda ochish uchun QR kodni skanerlang</p>
-        <img class="overlay__qr" :src="`https://api.qrserver.com/v1/create-qr-code/?size=270x270&data=${activeHotel.attributes.maps_url}`" />
-
-        <button class="btn--close"></button>
-      </div>
-    </div>
-  </div>
-
-  <div class="overlay overlay--info">
-    <div class="overlay__inner">
-      <div class="overlay__start">
-        <img class="overlay__img" :src="publicURL + activeHotel.attributes.photo.data.attributes.url" />
-      </div>
-      <div class="overlay__end">
-        <p class="overlay__title">{{ activeHotel.attributes.title_uz }}</p>
-
-        <div class="overlay__row">
-          <span style="font-weight: bold;">Manzil:</span>
-          <span>{{ activeHotel.attributes.address_uz }}</span>
-        </div>
-        <div class="overlay__row">
-          <span style="font-weight: bold;">Telefon raqami:</span>
-          <span>{{ activeHotel.attributes.phone_number }}</span>
-        </div>
-        <div class="overlay__row">
-          <span style="font-weight: bold;">Bo'sh xonalar soni:</span>
-          <span>{{ activeHotel.attributes.rooms }}</span>
-        </div>
-        <div class="overlay__row">
-          <span style="font-weight: bold;">Bo'sh o'rinlar soni:</span>
-          <span>{{ activeHotel.attributes.seats }}</span>
-        </div>
-
-        <button class="btn--close"></button>
-      </div>
+      <embed class="overlay__embed" :src="publicURL + activeHotel.attributes.pdf.data.attributes.url" type="application/pdf" />
+      <button class="btn--close"></button>
     </div>
   </div>
 </template>
 
 <style scoped>
+/* COVERS */
+
+.inner {
+  margin-bottom: 40px;
+}
+
+
+.overlay__embed {
+  width: 100%;
+  height: 100%;
+}
+
+.covers {
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  overflow-y: scroll;
+}
+
+.cover {
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: calc(16.67% - 17px);
+  height: 435px;
+  overflow: hidden;
+  border-radius: 4px;
+  position: relative;
+}
+
+.cover__img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cover__inner {
+  margin-top: auto;
+  position: relative;
+  background: rgba(255, 255, 255, 0.60);
+  backdrop-filter: blur(16px);
+  z-index: 1;
+  padding: 20px;
+}
+
+.cover__title {
+  text-align: center;
+  color: #113162;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 1.08px;
+  line-height: 21.6px;
+}
 /* SLIDER */
 
 .slider {
@@ -424,7 +321,7 @@
   flex-grow: 1;
   width: 30%;
   display: flex;
-  padding-bottom: 20px;
+  /* padding-bottom: 20px; */
   flex-direction: column;
 }
 
@@ -460,11 +357,15 @@
 }
 
 .btn--back {
-  margin-right: 450px;
+  margin-right: 20px;
 }
 
 .btn--lang::before {
   background-image: url('~/assets/img/icon-lang.svg');
+}
+
+.img-around {
+  margin-right: auto;
 }
 
 .logo {
@@ -502,10 +403,11 @@
   flex-grow: 1;
   position: relative;
   width: 100%;
-  padding-inline: 40px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  overflow-y: scroll;
+  /* padding-inline: 40px; */
+  /* display: flex; */
+  /* align-items: center; */
+  /* justify-content: center; */
 }
 
 .inner__map {
@@ -686,77 +588,57 @@
   color: #005187;
 }
 
+.overlay__inner {
+  position: relative;
+}
+
 .btn--close {
   position: absolute;
   right: 40px;
-  top: 40px;
+  top: -80px;
+  /* transform: translateX(-50%); */
   width: 40px;
   height: 40px;
   border-radius: 50%;
   background-image: url('~/assets/img/icon-close.svg');
+  filter: invert(1);
+  z-index: 10;
 }
 </style>
 
 <script>
 export default {
   mounted() {
-    const dropdownBtn = document.querySelector('.dropdown__btn');
-    const elLocation = document.querySelector('.btn--location');
-    const elInfoBtn = document.querySelector('.btn--info');
     const elsClose = document.querySelectorAll('.btn--close');
-    const elItems = document.querySelectorAll('.item');
+    const elsCover = document.querySelectorAll('.cover');
 
-    dropdownBtn.addEventListener('click', () => {
-      dropdownBtn.classList.toggle('dropdown__btn--open');
+    elsCover.forEach((el) => {
+      el.addEventListener('click', () => {
+        openOverlay();
+      });
     });
 
-    elLocation.addEventListener('click', () => {
-      document.querySelector('.overlay--location').classList.add('overlay--open');
-    });
-
-    elInfoBtn.addEventListener('click', () => {
-      document.querySelector('.overlay--info').classList.add('overlay--open');
-    });
+    function openOverlay() {
+      document.querySelector('.overlay--pdf').classList.add('overlay--open');
+    }
 
     elsClose.forEach((el) => {
       el.addEventListener('click', () => {
-        document.querySelector('.overlay--location').classList.remove('overlay--open');
-        document.querySelector('.overlay--info').classList.remove('overlay--open');
+        document.querySelector('.overlay--pdf').classList.remove('overlay--open');
       });
     });
-
-    elItems.forEach((el) => {
-      el.addEventListener('click', () => {
-        elItems.forEach((el) => {
-          el.classList.remove('item--active');
-        });
-        el.classList.add('item--active');
-      });
-    });
-
-    // Glide 
-
-    new Glide('.slider', {
-      type: 'carousel',
-      autoplay: 3000
-
-    }).mount();
   },
 
   methods: {
     setActiveHotel(id) {
       this.activeHotel = this.hotels.find(item => item.id == id);
     },
-
-    getURL(url) {
-      return /src="(.*?)"/.exec(url)[1];
-    }
   },
 
   async setup() {
     const activeHotel = ref(null);
     const config = useRuntimeConfig();
-    const hotels = await useFetch(config.public.strapiURL + '/api/hotels?populate=*', {
+    const hotels = await useFetch(config.public.strapiURL + '/api/covers?populate=*', {
       headers: {
         'Authorization': `bearer ${config.public.strapiToken}`
       }
